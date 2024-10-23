@@ -1,46 +1,38 @@
-document.getElementById('imageInput').addEventListener('change', function(event) {
-    const imagesContainer = document.getElementById('images');
-    imagesContainer.innerHTML = ''; // Clear previous images
+document.getElementById('upload-button').addEventListener('click', function() {
+    const fileInput = document.getElementById('file-input');
+    const files = fileInput.files;
 
-    const files = event.target.files;
-    for (let i = 0; i < files.length; i++) {
-        const file = files[i];
+    if (files.length > 0) {
+        const file = files[0];
+        const galleryContainer = file.type.startsWith('image/') ? document.getElementById('photo-gallery') : document.getElementById('video-gallery');
+        
         const reader = new FileReader();
-
         reader.onload = function(e) {
-            const img = document.createElement('img');
-            img.src = e.target.result;
-            imagesContainer.appendChild(img);
+            let element;
+            if (file.type.startsWith('image/')) {
+                element = document.createElement('img');
+                element.src = e.target.result;
+            } else if (file.type.startsWith('video/')) {
+                element = document.createElement('video');
+                element.src = e.target.result;
+                element.controls = true;
+            }
 
-            // Tambahkan tautan untuk mengedit gambar di iLoveIMG
-            const editLink = document.createElement('a');
-            editLink.href = `https://www.iloveimg.com/edit-image?image=${encodeURIComponent(e.target.result)}`;
-            editLink.target = "_blank";
-            editLink.className = 'edit-link';
-            editLink.innerText = 'Edit Gambar di iLoveIMG';
-            imagesContainer.appendChild(editLink);
-        }
+            // Tambahkan elemen ke galeri
+            galleryContainer.appendChild(element);
 
+            // Buat tombol download
+            const downloadButton = document.createElement('a');
+            downloadButton.href = e.target.result;
+            downloadButton.download = file.name; // Nama file saat diunduh
+            downloadButton.innerText = 'Download';
+            downloadButton.className = 'download-button';
+
+            // Tambahkan tombol download ke galeri
+            galleryContainer.appendChild(downloadButton);
+        };
         reader.readAsDataURL(file);
-    }
-});
-
-document.getElementById('videoInput').addEventListener('change', function(event) {
-    const videosContainer = document.getElementById('videos');
-    videosContainer.innerHTML = ''; // Clear previous videos
-
-    const files = event.target.files;
-    for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        const reader = new FileReader();
-
-        reader.onload = function(e) {
-            const video = document.createElement('video');
-            video.src = e.target.result;
-            video.controls = true;
-            videosContainer.appendChild(video);
-        }
-
-        reader.readAsDataURL(file);
+    } else {
+        alert('Silakan pilih file untuk diunggah.');
     }
 });

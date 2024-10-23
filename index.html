@@ -3,22 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Integrasi Foto dan Video dengan iLoveIMG</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Galeri Foto dan Video</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Unggah Foto dan Video</h1>
-        <input type="file" id="imageInput" accept="image/*">
-        <input type="file" id="videoInput" accept="video/*">
-        
-        <div id="mediaDisplay">
-            <h2>Media yang Diunggah:</h2>
-            <div id="images"></div>
-            <div id="videos"></div>
-        </div>
-    </div>
-
+    <header>
+        <h1>Galeri Foto dan Video</h1>
+    </header>
+    <main>
+        <section id="gallery">
+            <h2>Foto</h2>
+            <div class="gallery-container" id="photo-gallery">
+                <!-- Foto akan ditambahkan di sini -->
+            </div>
+            <h2>Video</h2>
+            <div class="gallery-container" id="video-gallery">
+                <!-- Video akan ditambahkan di sini -->
+            </div>
+        </section>
+        <section id="upload">
+            <h2>Unggah Foto atau Video</h2>
+            <input type="file" id="file-input" accept="image/*,video/*">
+            <button id="upload-button">Unggah</button>
+        </section>
+    </main>
     <script src="script.js"></script>
 </body>
 </html>
